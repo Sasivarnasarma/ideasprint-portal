@@ -1,0 +1,1487 @@
+/* ==========================================
+   ideasprint 2026 — Style-Guide-Compliant Theme
+   CSS-only retheme: no JSX changes required
+   ========================================== */
+
+/* ── 1. CSS Variables (from style guide §3) ── */
+:root {
+  /* Raw Palette */
+  --color-darkest: #04231E;
+  --color-dark: #1B5B4D;
+  --color-mid: #128C7D;
+  --color-accent: #03C7B3;
+  --color-text: #FBFFFE;
+
+  /* Raw RGB channels (for rgba helpers) */
+  --rgb-darkest: 4, 35, 30;
+  --rgb-dark: 27, 91, 77;
+  --rgb-mid: 18, 140, 125;
+  --rgb-accent: 3, 199, 179;
+  --rgb-text: 251, 255, 254;
+
+  /* Semantic Aliases */
+  --bg-primary: #04231E;
+  --bg-secondary: #04231E;
+  --ui-panel: rgba(4, 35, 30, 0.45);
+  --glass-bg: rgba(27, 91, 77, 0.25);
+  --glass-border: rgba(3, 199, 179, 0.25);
+  --accent: #03C7B3;
+  --text-primary: #FBFFFE;
+  --text-muted: #B8C2C0;
+  --text-secondary: rgba(251, 255, 254, 0.7);
+
+  /* Glow utilities */
+  --glow-subtle: 0 0 10px rgba(3, 199, 179, 0.3);
+  --glow-mid: 0 0 20px rgba(3, 199, 179, 0.4);
+  --glow-strong: 0 0 30px rgba(3, 199, 179, 0.6);
+
+  /* Accent opacity helpers */
+  --accent-05: rgba(3, 199, 179, 0.05);
+  --accent-08: rgba(3, 199, 179, 0.08);
+  --accent-10: rgba(3, 199, 179, 0.10);
+  --accent-15: rgba(3, 199, 179, 0.15);
+  --accent-20: rgba(3, 199, 179, 0.20);
+  --accent-25: rgba(3, 199, 179, 0.25);
+  --accent-30: rgba(3, 199, 179, 0.30);
+  --accent-35: rgba(3, 199, 179, 0.35);
+  --accent-50: rgba(3, 199, 179, 0.50);
+  --accent-60: rgba(3, 199, 179, 0.60);
+
+  /* Dark opacity helpers */
+  --dark-40: rgba(4, 35, 30, 0.40);
+  --dark-60: rgba(4, 35, 30, 0.60);
+  --dark-80: rgba(4, 35, 30, 0.80);
+  --dark-95: rgba(4, 35, 30, 0.95);
+
+  /* Status (Overridden to strictly adhere to palette) */
+  --success: var(--color-accent);
+  --error: var(--text-muted);
+  --warning: var(--color-mid);
+
+  /* Typography */
+  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Montserrat', sans-serif;
+
+  /* Spacing */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+
+/* ── 2. Reset & Base (style guide §4) ── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+::selection {
+  background: rgba(3, 199, 179, 0.25);
+  color: var(--text-primary);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-35);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-60);
+}
+
+
+/* ── 3. Atmospheric Background (style guide §5) ── */
+#smooth-wave-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--color-darkest);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#smooth-wave-bg::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(ellipse at center, rgba(3, 199, 179, 0.15) 0%, transparent 60%);
+  filter: blur(80px);
+  transform: rotate(-15deg);
+  opacity: 0.8;
+}
+
+#smooth-wave-bg::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  right: -20%;
+  width: 120%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, rgba(18, 140, 125, 0.2) 0%, transparent 70%);
+  filter: blur(100px);
+  transform: rotate(20deg);
+  opacity: 0.7;
+}
+
+#root {
+  position: relative;
+  z-index: 10;
+}
+
+
+/* ── 4. Auth Page Layout ── */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative circles */
+.auth-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Floating circles removed to prevent off-center phantom glows */
+/* ── 5. Auth Container & Card (Glassmorphism §6) ── */
+.auth-container {
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-container {
+  max-width: 560px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--color-darkest);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(3, 199, 179, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 3.5rem 2.5rem 2.5rem 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: visible !important;
+  isolation: isolate;
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.auth-card:hover {
+  border-color: rgba(3, 199, 179, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+
+.auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  border-radius: inherit;
+}
+
+.register-card {
+  padding: 3.5rem 2.5rem 2rem 2.5rem;
+}
+
+
+/* ── 6. Logo ── */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.logo-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--accent), var(--color-mid));
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-darkest);
+  box-shadow: 0 4px 15px rgba(3, 199, 179, 0.3);
+}
+
+.logo-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.logo-text {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--text-primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo-img {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(3, 199, 179, 0.2));
+  transition: transform var(--transition-normal);
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
+}
+
+
+/* ── 7. Auth Header ── */
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-header h1 {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.auth-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+
+/* ── 8. Progress Indicator ── */
+.progress-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 2rem;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.step-number {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--dark-80);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-muted);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all var(--transition-normal);
+}
+
+.step-number svg {
+  width: 18px;
+  height: 18px;
+}
+
+.progress-step.active .step-number {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--color-darkest);
+  box-shadow: var(--glow-mid);
+}
+
+.progress-step.completed .step-number {
+  background: var(--success);
+  border-color: transparent;
+  color: white;
+}
+
+.step-label {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color var(--transition-normal);
+}
+
+.progress-step.active .step-label,
+.progress-step.completed .step-label {
+  color: var(--text-primary);
+}
+
+.progress-line {
+  width: 60px;
+  height: 3px;
+  background: rgba(3, 199, 179, 0.15);
+  margin: 0 0.5rem;
+  margin-bottom: 1.75rem;
+  border-radius: 2px;
+  transition: background var(--transition-normal);
+}
+
+.progress-line.active {
+  background: linear-gradient(90deg, var(--success), var(--accent));
+}
+
+
+/* ── 9. Stage Content ── */
+.stage-wrapper {
+  position: relative;
+  clip-path: inset(-100px -30px -100px -30px);
+}
+
+.stage-slide {
+  animation: slideIn 0.4s ease forwards;
+}
+
+.stage-wrapper.forward .stage-slide {
+  animation: slideInRight 0.4s ease forwards;
+}
+
+.stage-wrapper.backward .stage-slide {
+  animation: slideInLeft 0.4s ease forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ── 10. Stage Header ── */
+.stage-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.stage-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  box-shadow: var(--glow-mid);
+}
+
+.stage-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.stage-icon.otp-icon {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: var(--glow-mid);
+}
+
+.stage-icon.team-icon {
+  border-color: var(--success);
+  color: var(--success);
+  box-shadow: 0 0 30px hsla(150, 80%, 40%, 0.4);
+}
+
+.stage-header h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.stage-header p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.email-highlight {
+  display: block;
+  color: var(--accent);
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+
+/* ── 11. Form Styles (style guide §10) ── */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: rgba(4, 35, 30, 0.8);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.form-group input::placeholder {
+  color: var(--text-primary);
+  opacity: 0.4;
+}
+
+.form-group input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(3, 199, 179, 0.3), 0 0 30px rgba(3, 199, 179, 0.1);
+}
+
+
+/* ── 12. OTP Inputs ── */
+.otp-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.otp-input {
+  width: 52px;
+  height: 60px;
+  background: rgba(4, 35, 30, 0.8);
+  border: 2px solid var(--glass-border);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.otp-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(3, 199, 179, 0.3), 0 0 30px rgba(3, 199, 179, 0.1);
+  transform: scale(1.05);
+}
+
+.otp-input:not(:placeholder-shown) {
+  border-color: var(--success);
+}
+
+
+/* ── 13. Resend Section ── */
+.resend-section {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.resend-section p {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.resend-timer {
+  color: var(--text-muted);
+}
+
+.resend-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color var(--transition-fast);
+}
+
+.resend-btn:hover {
+  color: var(--text-primary);
+}
+
+
+/* ── 14. Back / Edit Button ── */
+.back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  color: var(--accent);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  margin-top: 0.75rem;
+}
+
+.back-btn:hover {
+  background: var(--accent-10);
+  border-color: var(--accent);
+  box-shadow: var(--glow-subtle);
+}
+
+.back-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+
+/* ── 15. Field Error ── */
+.field-error {
+  color: var(--error);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  margin-left: 0.8rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  animation: slideDownFade 0.3s ease forwards;
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.member-form-group {
+  margin-bottom: 0.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ── 16. Password Toggle ── */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 3rem;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle:hover {
+  color: var(--accent);
+}
+
+.password-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+
+/* ── 17. Primary Button (Modern Cinematic Glass) ── */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.9rem 2.2rem;
+  /* Glassmorphic base */
+  background: rgba(3, 199, 179, 0.15);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid rgba(3, 199, 179, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 30px;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  text-decoration: none;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: rgba(3, 199, 179, 0.3);
+  border-color: rgba(3, 199, 179, 0.8);
+  box-shadow: 0 0 25px rgba(3, 199, 179, 0.5), 0 8px 25px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-primary svg {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-primary span,
+.btn-primary svg {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ── 18. Secondary Button (Outline — style guide §7) ── */
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.9rem 2.2rem;
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 30px;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  margin-top: 0.5rem;
+  text-decoration: none;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--accent-10);
+  box-shadow: 0 0 15px rgba(3, 199, 179, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-secondary svg {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* ── 18.5 Loading Spinner ── */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(251, 255, 254, 0.3);
+  border-bottom-color: var(--text-primary);
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* ── 19. Compact Input ── */
+.input-compact {
+  padding: 0.75rem 1rem !important;
+  font-size: 0.9rem !important;
+  border-radius: 4px !important;
+}
+
+
+/* ── 20. Spinner ── */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top-color: var(--color-darkest);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ── 21. Error Message ── */
+.error-message {
+  background: hsla(0, 85%, 60%, 0.12);
+  border: 1px solid hsla(0, 85%, 60%, 0.3);
+  color: var(--error);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+
+/* ── 22. Auth Footer ── */
+.auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+.auth-footer p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.auth-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.auth-link:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+
+/* ── 23. Team Form Styles ── */
+.team-name-level-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+  .team-name-level-row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+.team-form {
+  gap: 1rem;
+}
+
+.leader-info {
+  background: rgba(3, 199, 179, 0.08);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.leader-edit-btn {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.leader-edit-btn:hover {
+  background: var(--accent-15);
+  border-color: var(--accent);
+}
+
+.leader-edit-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.leader-badge {
+  background: var(--accent);
+  color: var(--color-darkest);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.leader-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  overflow: hidden;
+}
+
+.leader-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.leader-email {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+
+/* ── 24. Members Section ── */
+.members-section {
+  margin-top: 0.5rem;
+}
+
+.members-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.members-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+}
+
+.add-member-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: none;
+  border: 1px dashed var(--glass-border);
+  color: var(--accent);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.add-member-btn:hover {
+  background: var(--accent-10);
+  border-color: var(--accent);
+}
+
+.add-member-btn-large {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: var(--accent-05);
+  backdrop-filter: blur(4px);
+  border: 2px dashed var(--glass-border);
+  color: var(--accent);
+  border-radius: 30px;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  margin-top: 0.5rem;
+}
+
+.add-member-btn-large:hover {
+  background: var(--accent-10);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--glow-subtle);
+}
+
+.add-member-btn-large svg {
+  width: 20px;
+  height: 20px;
+}
+
+.add-member-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+
+/* ── 25. Member Card ── */
+.member-card {
+  background: rgba(4, 35, 30, 0.6);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  animation: slideIn 0.3s ease;
+}
+
+.member-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.member-number {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.remove-member-btn {
+  width: 28px;
+  height: 28px;
+  background: hsla(0, 85%, 60%, 0.12);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--error);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.remove-member-btn:hover {
+  background: hsla(0, 85%, 60%, 0.25);
+}
+
+.remove-member-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.member-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.remove-member-btn {
+  background: transparent;
+  border: 1px solid var(--text-muted);
+  color: var(--text-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.remove-member-btn:hover {
+  background: rgba(239, 68, 68, 0.1); /* Subtle red tint */
+  border-color: #ef4444;
+  color: #ef4444;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+  transform: scale(1.1);
+}
+
+.remove-member-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.member-fields input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(4, 35, 30, 0.8);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.member-fields input::placeholder {
+  color: var(--text-primary);
+  opacity: 0.4;
+}
+
+.member-fields input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(3, 199, 179, 0.2);
+}
+
+
+/* ── 26. Dashboard / Success Placeholder ── */
+.dashboard-placeholder {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.dashboard-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: rgba(3, 199, 179, 0.1);
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 8px 30px hsla(145, 80%, 50%, 0.3);
+}
+
+.success-icon svg {
+  width: 40px;
+  height: 40px;
+}
+
+.dashboard-card h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-card p {
+  color: var(--text-muted);
+}
+
+.coming-soon {
+  margin-top: 1rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+
+/* ── 27. Forgot Password Success ── */
+.forgot-success {
+  text-align: center;
+}
+
+
+/* ── 28. Team Name Header ── */
+.team-name-header {
+  font-family: var(--font-heading) !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 2px !important;
+  color: var(--text-primary) !important;
+  margin-bottom: 1rem !important;
+  display: block;
+  text-transform: uppercase;
+}
+
+
+/* ── 29. Register Header ── */
+.register-header {
+  text-align: center;
+}
+
+
+/* ── 30. Desktop Landscape Layout ── */
+@media (min-width: 768px) {
+  .register-container {
+    max-width: 780px;
+  }
+
+  .register-card {
+    max-width: 780px;
+  }
+
+  /* Two-column grid for Stage 1 form */
+  .auth-form:not(.team-form) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.5rem;
+  }
+
+  /* Full-width elements in Stage 1 */
+  .auth-form:not(.team-form) .error-message,
+  .auth-form:not(.team-form) .turnstile-container,
+  .auth-form:not(.team-form) .btn-primary,
+  .auth-form:not(.team-form) .btn-secondary,
+  .auth-form:not(.team-form) .otp-container,
+  .auth-form:not(.team-form) .resend-section {
+    grid-column: 1 / -1;
+  }
+
+  /* Stage 2 OTP form: override back to single column centered layout */
+  .auth-form:not(.team-form):has(.otp-container) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .auth-form:not(.team-form):has(.otp-container) .btn-primary,
+  .auth-form:not(.team-form):has(.otp-container) .btn-secondary,
+  .auth-form:not(.team-form):has(.otp-container) .error-message,
+  .auth-form:not(.team-form):has(.otp-container) .resend-section {
+    width: 100%;
+  }
+
+  /* Two-column grid for Stage 3 team form */
+  .auth-form.team-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.5rem;
+  }
+
+  /* Full-width elements in Stage 3 */
+  .auth-form.team-form .leader-info,
+  .auth-form.team-form .members-section,
+  .auth-form.team-form .members-header,
+  .auth-form.team-form .form-group,
+  .auth-form.team-form .error-message,
+  .auth-form.team-form .btn-primary {
+    grid-column: 1 / -1;
+  }
+
+  /* Team Name + Level side by side on desktop */
+  .auth-form.team-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Member fields inside member cards — also use two-column grid */
+  .member-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem 1rem;
+  }
+
+  /* Stage header always spans full width */
+  .stage-header {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ── 30b. Responsive (Mobile) ── */
+@media (max-width: 640px) {
+  .auth-page {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .auth-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .auth-card {
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logo-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .logo-text {
+    font-size: 1.5rem;
+  }
+
+  .auth-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .otp-container {
+    gap: 0.5rem;
+  }
+
+  .otp-input {
+    width: 44px;
+    height: 52px;
+    font-size: 1.25rem;
+  }
+
+  .progress-line {
+    width: 40px;
+  }
+
+  .step-number {
+    width: 36px;
+    height: 36px;
+    font-size: 0.85rem;
+  }
+
+  .step-label {
+    font-size: 0.7rem;
+  }
+
+  .leader-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    position: relative;
+    padding-right: 3.5rem;
+  }
+
+  .leader-details {
+    width: 100%;
+  }
+
+  .leader-name,
+  .leader-email {
+    word-break: break-word;
+    white-space: normal;
+  }
+
+  .leader-edit-btn {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    margin-left: 0;
+  }
+}
+
+
+/* ── 31. Keyframe Animations (style guide §12) ── */
+@keyframes badgePulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes oceanSwell {
+  0% {
+    transform: translateY(0px);
+  }
+
+  100% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ── 32. Force Team Registration Input Colors ── */
+textarea, select {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: rgba(4, 35, 30, 0.8) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 4px;
+  color: var(--text-primary) !important;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: all var(--transition-fast) !important;
+  outline: none;
+}
+
+textarea:focus, select:focus {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 15px rgba(3, 199, 179, 0.3), 0 0 30px rgba(3, 199, 179, 0.1) !important;
+}
+
+option {
+  background: var(--color-darkest);
+  color: var(--text-primary);
+}
