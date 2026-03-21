@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-import { registrationAPI } from '../api/registration';
-import { useAuth } from '../context/AuthContext';
+import { submissionAPI } from '../api/submission';
+import { useSubmission } from '../context/SubmissionContext';
 
-const RegisterStage2 = ({ onNext, onBack }) => {
-    const { registrationData, updateRegistrationData, updateRegistrationStage } = useAuth();
+const SubmissionStage2 = ({ onNext, onBack }) => {
+    const { submissionData, updateSubmissionData } = useSubmission();
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -67,15 +67,17 @@ const RegisterStage2 = ({ onNext, onBack }) => {
         setIsLoading(true);
 
         try {
-            const emailToVerify = registrationData.pendingEmail || registrationData.email;
-            const response = await registrationAPI.verifyOTP(emailToVerify, otpCode, registrationData.captchaSessionToken);
-            updateRegistrationData({
+            const emailToVerify = submissionData.pendingEmail;
+            const response = await submissionAPI.verifyOTP(emailToVerify, otpCode, submissionData.captchaSessionToken);
+            updateSubmissionData({
                 email: emailToVerify,
                 pendingEmail: '',
                 verificationToken: response.verification_token,
-                captchaSessionToken: ''
+                captchaSessionToken: '',
+                teamName: response.team_name,
+                teamNo: response.team_no,
+                hasSubmitted: response.has_submitted
             });
-            updateRegistrationStage(3);
             onNext();
         } catch (err) {
             if (err.response?.status === 401) {
@@ -96,8 +98,8 @@ const RegisterStage2 = ({ onNext, onBack }) => {
         setIsResending(true);
 
         try {
-            const emailToVerify = registrationData.pendingEmail || registrationData.email;
-            await registrationAPI.resendOTP(emailToVerify, registrationData.captchaSessionToken);
+            const emailToVerify = submissionData.pendingEmail;
+            await submissionAPI.resendOTP(emailToVerify, submissionData.captchaSessionToken);
             setResendTimer(60);
             setError('');
         } catch (err) {
@@ -128,10 +130,10 @@ const RegisterStage2 = ({ onNext, onBack }) => {
                 </div>
                 <h2>Verify Your Email</h2>
                 <p>We've sent a 6-digit code to</p>
-                <span className="email-highlight">{registrationData.pendingEmail || registrationData.email}</span>
+                <span className="email-highlight">{submissionData.pendingEmail}</span>
             </div>
 
-            <form onSubmit={handleSubmit} className="auth-form">
+            <form onSubmit={handleSubmit} className="auth-form" style={{ display: 'flex', flexDirection: 'column' }}>
                 <div className="otp-container">
                     {otp.map((digit, index) => (
                         <input
@@ -191,4 +193,4 @@ const RegisterStage2 = ({ onNext, onBack }) => {
     );
 };
 
-export default RegisterStage2;
+export default SubmissionStage2;

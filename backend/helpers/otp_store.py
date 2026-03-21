@@ -8,9 +8,7 @@ logger = logging.getLogger(__name__)
 OTP_EXPIRY_MINUTES = 10
 MAX_OTP_ATTEMPTS = 5
 
-_otp_store: Dict[
-    str, tuple[str, datetime, int]
-] = {}
+_otp_store: Dict[str, tuple[str, datetime, int]] = {}
 
 
 def store_otp(email: str, otp: str):

@@ -7,8 +7,8 @@ import jwt
 SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 ALGORITHM = "HS256"
 
-VERIFICATION_TOKEN_EXPIRE_MINUTES = 15
-CAPTCHA_SESSION_EXPIRE_MINUTES = 15
+VERIFICATION_TOKEN_EXPIRE_MINUTES = 30
+CAPTCHA_SESSION_EXPIRE_MINUTES = 30
 
 
 def create_verification_token(email: str) -> str:
@@ -33,7 +33,7 @@ def decode_verification_token(token: str) -> Optional[str]:
         return None
     except jwt.PyJWTError:
         return None
-  
+
 
 def create_captcha_session_token(email: str) -> str:
     expire = datetime.now(timezone.utc) + timedelta(

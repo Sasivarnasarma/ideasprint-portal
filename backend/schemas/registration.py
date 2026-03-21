@@ -1,25 +1,7 @@
-import re
 from typing import List, Optional
 
-from pydantic import (BaseModel, EmailStr, Field,
-                      model_validator)
+from pydantic import BaseModel, Field, model_validator
 from schemas.team import TeamMemberSchema
-
-
-class SendOTPRequest(BaseModel):
-    email: EmailStr
-    turnstile_token: str
-
-
-class ResendOTPRequest(BaseModel):
-    email: EmailStr
-    captcha_session_token: str
-
-
-class UserVerifyOTP(BaseModel):
-    email: EmailStr
-    otp: str
-    captcha_session_token: str
 
 
 class UserFullRegistration(BaseModel):
@@ -55,7 +37,6 @@ class UserFullRegistration(BaseModel):
             if not self.idea or not self.idea.strip():
                 raise ValueError("An idea is required for Level 1 teams.")
 
-            # Rough word count estimation by splitting on whitespace
             word_count = len(self.idea.split())
             if word_count > 100:
                 raise ValueError(

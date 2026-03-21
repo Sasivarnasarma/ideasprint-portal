@@ -8,8 +8,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
 
-import resend
 from fastapi.concurrency import run_in_threadpool
+import resend
 
 logger = logging.getLogger(__name__)
 
@@ -83,14 +83,9 @@ async def send_email(to_email: str, subject: str, body: str):
 
 
 async def send_otp_email(to_email: str, otp: str, purpose: str = "registration"):
-    if purpose == "password_reset":
-        subject = "Password Reset OTP for ideasprint"
-        heading = "Reset Your Password"
-        description = "Use the verification code below to reset your password. This code will expire in 5 minutes."
-    else:
-        subject = "Your Verification OTP for ideasprint"
-        heading = "Verify Your Email"
-        description = "Use the verification code below to complete your registration. This code will expire in 5 minutes."
+    subject = "Your Verification OTP for ideasprint"
+    heading = "Verify Your Email"
+    description = f"Use the verification code below to complete your {purpose}. This code will expire in 5 minutes."
 
     template = load_template("otp_email.html")
     if template:
@@ -188,4 +183,27 @@ async def send_welcome_email(
         """
 
     logger.info(f"Sending welcome email to {to_email}")
+    return await send_email(to_email, subject, body)
+
+
+async def send_submission_success_email(
+    to_email: str,
+    name: str,
+    team_name: str,
+):
+    subject = "Proposal Submission Successful - ideasprint 2026"
+
+    template = load_template("submission_success.html")
+    if template:
+        body = template.replace("{{name}}", html.escape(name))
+        body = body.replace("{{team_name}}", html.escape(team_name))
+    else:
+        body = f"""
+        <p>Proposal Submission Successful!</p>
+        <p>Hi {html.escape(name)},</p>
+        <p>Your proposal for team <b>{html.escape(team_name)}</b> has been successfully submitted for ideasprint 2026.</p>
+        <p>Thank you for participating!</p>
+        """
+
+    logger.info(f"Sending submission success email to {to_email}")
     return await send_email(to_email, subject, body)

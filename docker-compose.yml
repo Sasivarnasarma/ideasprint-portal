@@ -1,0 +1,36 @@
+name: ideasprint-portal
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ideasprint-backend
+    ports:
+      - "5990:3000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./Data/Submissions:/app/Submissions
+    restart: unless-stopped
+    networks:
+      - portal-network
+
+  frontend:
+    build:
+      context: ./frontend-user
+      dockerfile: Dockerfile
+    container_name: ideasprint-frontend
+    ports:
+      - "5995:80"
+    env_file:
+      - ./frontend-user/.env
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - portal-network
+
+networks:
+  portal-network:
+    driver: bridge

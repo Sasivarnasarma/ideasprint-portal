@@ -1,6 +1,7 @@
-from database.connection import Base
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+
+from database.connection import Base
 
 
 class Team(Base):
@@ -11,6 +12,8 @@ class Team(Base):
     level = Column(String, nullable=False, server_default="Level 1")
     idea = Column(String, nullable=True)
     leader_id = Column(Integer, ForeignKey("users.id"))
+    youtube_link = Column(String, nullable=True)
+    pdf_link = Column(String, nullable=True)
 
     leader = relationship("User", back_populates="team")
     members = relationship(

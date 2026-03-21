@@ -1,84 +1,95 @@
 # IdeaSprint 2026 Portal
 
-A sleek and modern registration portal for **IdeaSprint 2026**, designed to handle team registrations with a seamless user experience, robust security, and automated admin notifications.
+A sleek, robust, and modern portal for **IdeaSprint 2026**, handling complex team registration logic and large-file proposal submissions. It is designed around maximum performance, security, and fully automated administrative features.
 
-## 🚀 Features
+---
 
-- **Multi-Step Registration**: A user-friendly, step-by-step form for individual and team details.
-- **Email OTP Verification**: Secure registration process with mandatory email verification via OTP.
-- **Security & Anti-Abuse**:
-  - **Cloudflare Turnstile**: Integrated CAPTCHA protection against bots.
-  - **Rate Limiting**: Backend protection using `SlowAPI` to prevent brute-force attacks.
-- **Automated Integrations**:
-  - **Email Notifications**: Welcome emails sent via **Resend**.
-  - **Admin Alerts**: Instant notifications to admins via **Telegram Bot**.
-  - **Data Logging**: Automatic synchronization of registration data with **Google Sheets**.
-- **Modern UI/UX**: Built with React 19 and a clean, responsive design.
+## 🚀 Key Features & Flow
+
+### 1. Advanced Team Registration
+- **Email OTP Verification**: Enforces email ownership using memory-stored, short-lived verification codes sent via Resend API.
+- **Security & Anti-Bot**: Integrated with **Cloudflare Turnstile** and backed by strict `SlowAPI` IP-based rate limiting on sensitive routes.
+- **Instant Admin Alerts**: Telegram Bot posts formatted alerts to the admin chat detailing new team formations.
+- **Data Synchronization**: Synchronizes registration details instantly with Google Sheets.
+
+### 2. Scalable Proposal Submission
+The platform supports large video links and PDF presentations without overloading the backend:
+- **Cloudflare R2 Presigned URLs**: Clients dynamically request a secure, time-limited presigned URL from the backend to stream large PDF uploads directly to an S3-compatible R2 bucket.
+- **Background Google Drive Archiving**: Once the client finishes the R2 upload, the backend triggers a background task to download the R2 object into a tempfile, compress/stream it into Google Drive, update the Google Sheet with the new viewing URLs, and post the final document directly to the Telegram admin group.
+
+### 3. Integrated User OAuth 2.0
+- Instead of constrained Service Accounts, this project leverages a **Desktop User OAuth 2.0** flow allowing the backend server to impersonate an actual Google Workspace/Gmail user. This grants high Quotas for Drive uploads and Sheets modifications. *(See [OAUTH_GUIDE.md](OAUTH_GUIDE.md) for full instructions on setting this up).*
+
+---
 
 ## 🛠️ Tech Stack
 
 ### Backend
 - **Framework**: [FastAPI](https://fastapi.tiangolo.com/) (Python)
-- **Database**: PostgreSQL with [SQLAlchemy](https://www.sqlalchemy.org/) (Asynchronous)
-- **Authentication**: JWT & OTP-based verification.
-- **Security**: Passlib (Argon2), SlowAPI, Cloudflare Turnstile.
-- **Communication**: Resend (Email), Telegram Bot API.
-- **Other**: Google Auth (for Sheets integration), Pydantic.
+- **Database**: PostgreSQL asynchronously managed via [SQLAlchemy](https://www.sqlalchemy.org/) & `asyncpg`.
+- **Storage/S3**: Cloudflare R2 via `boto3`.
+- **Google Integrations**: Google Drive API & Google Sheets API authorized via User OAuth.
+- **Notifications**: Telegram Bot API and Resend Email API.
+- **Security**: SlowlyAPI Rate limiting, Passlib, and custom Turnstile verification.
 
 ### Frontend
-- **Framework**: [React 19](https://react.dev/)
-- **Build Tool**: [Vite](https://vitejs.dev/)
-- **Routing**: React Router 7
-- **API Client**: Axios
-- **Package Manager**: pnpm
+- **Framework & Build**: React 19 + Vite + `pnpm`.
+- **Routing & Networking**: React Router 7 + Axios.
 
-## 📁 Project Structure
+---
+
+## 📁 Project Architecture
 
 ```text
 ideadsprint-portal/
-├── backend/                # FastAPI Application
-│   ├── database/           # DB Connection & Base Models
-│   ├── helpers/            # Utilities (Email, Sheets, Telegram, Security)
-│   ├── models/             # SQLAlchemy Models (User, Team)
-│   ├── routes/             # API Endpoints (Auth, Registration)
-│   ├── schemas/            # Pydantic Models
-│   ├── templates/          # Email Templates
-│   ├── main.py             # Entry Point
-│   └── requirements.txt    # Python Dependencies
-├── frontend-user/          # React Application
-│   ├── src/
-│   │   ├── assets/         # Styles & Images
-│   │   ├── components/     # UI Components
-│   │   ├── context/        # Auth Context
-│   │   ├── pages/          # Main Views (Register, Success)
-│   │   └── App.jsx         # Root Component
-│   ├── package.json        # Frontend Dependencies
-│   └── vite.config.js      # Vite Configuration
+├── backend/
+│   ├── database/           # Async SQLAlchemy Engine & Sessions
+│   ├── helpers/
+│   │   ├── drive.py        # Stream uploads/deletes Google Drive via OAuth
+│   │   ├── email.py        # Resend & SMTP mailing templates
+│   │   ├── sheets.py       # Google Sheet Appending & Cell Modifying
+│   │   ├── storage.py      # Cloudflare R2 Presigned URL Generation
+│   │   ├── telegram.py     # Admin alerts and PDF Document sending
+│   │   └── turnstile.py    # Cloudflare CAPTCHA Validation
+│   ├── models/             # SQLAlchemy ORM (User, Team)
+│   ├── routes/             # Distinct routers for OTP, Registration, Submissions
+│   ├── schemas/            # Pydantic rigorous type validation
+│   ├── get_oauth_token.py  # Utility script to generate Base64 User OAuth Token
+│   └── main.py             # FastAPI App Entrypoint & Lifespans
+├── frontend-user/          # React Single Page Application
+│   └── src/                # Contexts, Hooks, Multi-Step Registration forms
+├── OAUTH_GUIDE.md          # Step-by-step setup for Google Cloud Credentials
 └── README.md               # You are here!
 ```
+
+---
 
 ## ⚙️ Getting Started
 
 ### Prerequisites
-- Python 3.10+
-- Node.js & pnpm
-- PostgreSQL
+- **Python 3.10+**
+- **Node.js & pnpm**
+- **PostgreSQL** Database running locally or remote.
+- A generated **Google OAuth Base64 Token**. Follow the `OAUTH_GUIDE.md` precisely to generate this before starting the backend.
 
 ### Backend Setup
 1. Navigate to the backend directory:
    ```bash
    cd backend
    ```
-2. Create a virtual environment and activate it:
+2. Create and activate a Virtual Environment:
    ```bash
    python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   source .venv/bin/activate  # Windows: .venv\Scripts\activate
    ```
 3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-4. Configure environment variables (refer to `.env.example`).
+4. Copy environment variables and fill them out (see the **Environment Variables** section below):
+   ```bash
+   cp .env.example .env
+   ```
 5. Run the server:
    ```bash
    uvicorn main:app --reload
@@ -89,52 +100,64 @@ ideadsprint-portal/
    ```bash
    cd frontend-user
    ```
-2. Install dependencies:
+2. Install packages:
    ```bash
    pnpm install
    ```
-3. Configure environment variables (refer to `.env.example`).
-4. Start the development server:
+3. Setup variables:
+   ```bash
+   cp .env.example .env
+   ```
+4. Start development mode:
    ```bash
    pnpm dev
    ```
 
-## 🔑 Environment Variables
+---
+
+## 🔑 Environment Variables Reference
 
 ### Backend (`backend/.env`)
 | Variable | Description |
 |----------|-------------|
 | `ENV_LOADED` | Set to 'true' to signal environment is ready |
-| `DATABASE_URL` | PostgreSQL connection string |
-| `DB_ECHO` | If true, SQLAlchemy will log SQL queries |
-| `JWT_SECRET_KEY` | Secret for generating JWT tokens |
-| `SMTP_SERVER` | SMTP server for OTP emails |
-| `SMTP_PORT` | SMTP port (e.g., 587) |
-| `SMTP_USER` | SMTP username |
-| `SMTP_PASSWORD` | SMTP password |
-| `SMTP_FROM_EMAIL` | Sender email address for SMTP |
-| `TURNSTILE_SECRET_KEY` | Cloudflare Turnstile secret key |
-| `RESEND_API_KEY` | API key for Resend service |
-| `RESEND_FROM_EMAIL` | Sender email address for Resend |
-| `TELEGRAM_BOT_TOKEN` | Bot token for admin notifications |
-| `TELEGRAM_CHAT_ID` | Chat ID for the admin group |
-| `GOOGLE_SHEET_ID` | Spreadsheet ID for registration logging |
-| `GOOGLE_SERVICE_ACCOUNT_B64` | Base64 encoded Google Service Account JSON |
+| `DATABASE_URL` | Async PostgreSQL string (e.g. `postgresql+asyncpg://user:pass@localhost/db`) |
+| `DB_ECHO` | If true, SQLAlchemy will log raw SQL queries |
+| `JWT_SECRET_KEY` | Secret for generating internal system tokens |
+| `JWT_ALGORITHM` | Algorithm for JWT (e.g., HS256) |
+| `SMTP_SERVER`, `SMTP_PORT` | SMTP routing for standard mailing |
+| `SMTP_USER`, `SMTP_PASSWORD`| Credentials for the SMTP user |
+| `SMTP_FROM_EMAIL` | Origin email for SMTP emails sent out |
+| `TURNSTILE_SECRET_KEY` | Backend secret matching the frontend UI Site Key |
+| `RESEND_API_KEY`, `RESEND_FROM_EMAIL` | Account credentials for Resend OTP deliveries |
+| `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | Bot identifying token and the group chat ID |
+| `GOOGLE_DRIVE_FOLDER_ID` | Drive folder where PDFs are archived |
+| `GOOGLE_SHEET_ID` | Target Spreadsheet for appending rows |
+| `GOOGLE_OAUTH_TOKEN_B64` | **Critical:** The Base64 string from `OAUTH_GUIDE.md` |
+| `CLOUDFLARE_ACCOUNT_ID` | ID on your Cloudflare R2 dashboard |
+| `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY` | R2 API Keys with Write abilities |
+| `R2_BUCKET_NAME` | The exact name of your bucket for presigned operations |
 
 ### Frontend (`frontend-user/.env`)
 | Variable | Description |
 |----------|-------------|
-| `VITE_API_BASE_URL` | Backend API root URL |
-| `VITE_TURNSTILE_SITE_KEY` | Cloudflare Turnstile site key |
+| `VITE_API_BASE_URL` | Backend URL (e.g., `http://localhost:8000`) |
+| `VITE_TURNSTILE_SITE_KEY` | Public Frontend Key for Cloudflare Widget |
+
+---
 
 ## 🐳 Docker Deployment
 
-The backend is ready to be containerized. To build and run:
-```bash
-cd backend
-docker build -t ideasprint-backend .
-docker run -p 8000:8000 --env-file .env ideasprint-backend
-```
+The entire stack (backend and frontend) is fully containerized and runs seamlessly using Docker Compose.
+
+1. Create a `Data/Submissions` directory in the root if you want to inspect downloaded PDFs locally.
+2. From the root directory, start the services:
+   ```bash
+   docker-compose up --build -d
+   ```
+3. **Access points:**
+   - **Frontend**: `http://localhost:5995`
+   - **Backend API**: `http://localhost:5990`
 
 ---
-Built with ❤️ for IdeaSprint 2026.
+<center>Built with ❤️ for <b>ideasprint 2026</b> By <b>Sasivarnasarma</b>.</center>

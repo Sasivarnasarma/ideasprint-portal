@@ -6,7 +6,6 @@ from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 
 load_dotenv()
-
 is_env_loaded = os.getenv("ENV_LOADED", "false")
 
 logging.basicConfig(
@@ -15,9 +14,11 @@ logging.basicConfig(
     level=logging.INFO,
 )
 logger = logging.getLogger(__name__)
+logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.WARNING)
 logger.info(f"Environment loaded: {is_env_loaded}")
 
 from fastapi import FastAPI, Request
+from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from slowapi import Limiter
@@ -25,8 +26,9 @@ from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 
 from database.connection import Base, engine
+from helpers.oauth import verify_oauth_token_on_startup
 from helpers.otp_store import cleanup_expired_otps
-from routes import auth
+from routes import otp, registration, submission
 
 
 @asynccontextmanager
@@ -36,6 +38,9 @@ async def lifespan(app: FastAPI):
         await conn.run_sync(Base.metadata.create_all)
     logger.info("Initializing OTP cleanup task")
     cleanup_task = asyncio.create_task(cleanup_expired_otps())
+
+    await run_in_threadpool(verify_oauth_token_on_startup)
+
     yield
     logger.info("Shutting down application and cancelling OTP cleanup")
     cleanup_task.cancel()
@@ -70,10 +75,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth.router)
+app.include_router(registration.router)
+app.include_router(submission.router)
+app.include_router(otp.router)
 
 
 @app.get("/")
 @limiter.limit("10/minute")
 def read_root(request: Request):
-    return {"message": "Ah, you found the API. Now, what's your plan? 🙃"}
+    return {
+        "message": "Ah, you found the API. Now, what's your plan? 🙃",
+        "dev": "Sasivarnasarma",
+    }

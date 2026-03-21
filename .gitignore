@@ -78,3 +78,7 @@ Thumbs.db
 docker-compose.override.yml
 
 *.db
+
+credentials.json
+token.json
+backend/Submissions/*

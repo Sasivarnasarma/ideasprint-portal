@@ -1,17 +1,14 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import logo from '../assets/images/ideasprint-logo.webp';
 
-const RegistrationSuccessful = () => {
-    const navigate = useNavigate();
+const SubmissionSuccessful = () => {
+    const location = useLocation();
+    const teamName = location.state?.teamName || "your team";
 
     useEffect(() => {
         localStorage.clear();
     }, []);
-
-    const handleAction = () => {
-        navigate('/register');
-    };
 
     return (
         <div className="auth-page register-page">
@@ -29,12 +26,11 @@ const RegistrationSuccessful = () => {
                             </svg>
                         </div>
                         <h2 style={{ fontSize: '1.8rem', marginBottom: '0.1rem', color: '#ffffff', fontWeight: 'bold' }}>
-                            Registration Successful!
+                            Submission Successful!
                         </h2>
                         <p style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.85)', margin: '0 0 1.5rem 0' }}>
-                            Your team has been successfully registered.
+                            Your proposal for {teamName} has been received.
                         </p>
-
                     </div>
 
                     <div className="dashboard-content" style={{ width: '100%' }}>
@@ -42,9 +38,9 @@ const RegistrationSuccessful = () => {
                             <div className="member-header" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem', marginBottom: '1rem' }}>
                                 <span className="member-number" style={{ fontSize: '1.1rem', fontWeight: '600', color: 'rgba(255,255,255,0.9)' }}>Next Steps</span>
                             </div>
-                            <p style={{ margin: '0.75rem 0', color: 'rgba(255,255,255,0.8)', fontSize: '1rem' }}>• Get ready for an amazing experience at ideasprint 2026!</p>
-                            <p style={{ margin: '0.75rem 0', color: 'rgba(255,255,255,0.8)', fontSize: '1rem' }}>• Check your email for the confirmation.</p>
-                            <p style={{ margin: '0.75rem 0', color: 'rgba(255,255,255,0.8)', fontSize: '1rem' }}>• Start brainstorming your project idea!</p>
+                            <p style={{ margin: '0.75rem 0', color: 'rgba(255,255,255,0.8)', fontSize: '1rem' }}>• We have safely stored your PDF and video link!</p>
+                            <p style={{ margin: '0.75rem 0', color: 'rgba(255,255,255,0.8)', fontSize: '1rem' }}>• A confirmation email has been sent.</p>
+                            <p style={{ margin: '0.75rem 0', color: 'rgba(255,255,255,0.8)', fontSize: '1rem' }}>• Stay tuned for further updates regarding the competition.</p>
                         </div>
 
                         <button
@@ -72,4 +68,4 @@ const RegistrationSuccessful = () => {
     );
 };
 
-export default RegistrationSuccessful;
+export default SubmissionSuccessful;

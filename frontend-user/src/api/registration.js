@@ -17,34 +17,37 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-export const authAPI = {
+export const registrationAPI = {
   sendOTP: async (email, turnstileToken) => {
-    const response = await api.post('/auth/otp/send', {
+    const response = await api.post('/otp/send', {
       email,
       turnstile_token: turnstileToken,
+      purpose: 'registration'
     });
     return response.data;
   },
 
   resendOTP: async (email, captchaSessionToken) => {
-    const response = await api.post('/auth/otp/resend', {
+    const response = await api.post('/otp/resend', {
       email,
       captcha_session_token: captchaSessionToken,
+      purpose: 'registration'
     });
     return response.data;
   },
 
   verifyOTP: async (email, otp, captchaSessionToken) => {
-    const response = await api.post('/auth/otp/verify', {
+    const response = await api.post('/otp/verify', {
       email,
       otp,
       captcha_session_token: captchaSessionToken,
+      purpose: 'registration'
     });
     return response.data;
   },
 
   register: async (registrationData) => {
-    const response = await api.post('/auth/register', registrationData);
+    const response = await api.post('/registration/register', registrationData);
     return response.data;
   },
 };

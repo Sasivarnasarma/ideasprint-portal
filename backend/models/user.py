@@ -1,6 +1,7 @@
-from database.connection import Base
-from sqlalchemy import Boolean, Column, Integer, String
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+
+from database.connection import Base
 
 
 class User(Base):
@@ -11,5 +12,5 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     phone = Column(String, nullable=True)
     im_number = Column(String, unique=True, nullable=True)
-    is_active = Column(Boolean, default=True)
+
     team = relationship("Team", back_populates="leader", uselist=False)

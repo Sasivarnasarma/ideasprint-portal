@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { authAPI } from '../api/auth';
+import { registrationAPI } from '../api/registration';
 import { useAuth } from '../context/AuthContext';
 
 const RegisterStage1 = ({ onNext, onSkipToStage3 }) => {
@@ -174,7 +174,7 @@ const RegisterStage1 = ({ onNext, onSkipToStage3 }) => {
                 if (emailChanged) {
                     updateRegistrationData({ verificationToken: '', captchaSessionToken: '' });
                 }
-                const response = await authAPI.sendOTP(formData.email, turnstileToken);
+                const response = await registrationAPI.sendOTP(formData.email, turnstileToken);
                 updateRegistrationData({
                     pendingEmail: formData.email,
                     name: formData.name,

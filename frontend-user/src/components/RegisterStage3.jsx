@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authAPI } from '../api/auth';
+import { registrationAPI } from '../api/registration';
 import { useAuth } from '../context/AuthContext';
 
 const RegisterStage3 = ({ onBack }) => {
@@ -185,7 +185,7 @@ const RegisterStage3 = ({ onBack }) => {
                 idea: idea,
                 members: validMembers,
             };
-            const response = await authAPI.register(finalData);
+            const response = await registrationAPI.register(finalData);
             navigate('/register-success', { state: { registeredTeam: finalData } });
         } catch (err) {
             if (err.response?.status === 401) {
