@@ -33,7 +33,9 @@ async def send_telegram_notification(text: str):
             logger.info("Successfully sent Telegram notification.")
             return True
     except httpx.HTTPError as e:
-        logger.error(f"Failed to send Telegram notification: {e}")
+        logger.error(
+            f"Failed to send Telegram notification: {e} The response is {response.json()}"
+        )
         return False
 
 
@@ -58,12 +60,14 @@ async def send_telegram_document(file_path: str, caption: str):
                 logger.info("Successfully sent Telegram document.")
                 return True
     except Exception as e:
-        logger.error(f"Failed to upload Telegram document: {repr(e)}")
+        logger.error(
+            f"Failed to upload Telegram document: {repr(e)} The response is {response.json()}"
+        )
         return False
 
 
 def format_registration_message(user_data, new_team, members):
-    message = f"🚀 *New Team Registration!* 🚀\n\n"
+    message = "🚀 *New Team Registration!* 🚀\n\n"
     message += f"🏆 *Team Name:* `{_escape_md(new_team.name)}`\n"
     message += f"📊 *Level:* `{_escape_md(new_team.level)}`\n"
     if new_team.level == "Level 1" and new_team.idea:
@@ -80,17 +84,17 @@ def format_registration_message(user_data, new_team, members):
             message += f"   *IM Number:* `{_escape_md(member.im_number)}`\n"
             message += f"   *Phone:* `{_escape_md(member.phone)}`\n\n"
     else:
-        message += f"👥 *Team Members:* `None`\n"
-    message += f"🎉 *Welcome them to the Hackathon!*"
+        message += "👥 *Team Members:* `None`\n"
+    message += "🎉 *Welcome them to the Hackathon!*"
     return message
 
 
 def format_submission_message(team_no, team_name, youtube_url, drive_url, user_name):
-    message = f"🚀 *New Proposal Submitted!* 🚀\n\n"
+    message = "🚀 *New Proposal Submitted!* 🚀\n\n"
     message += f"🏆 *Team ID:* `{_escape_md(team_no)}`\n"
     message += f"🏆 *Team Name:* `{_escape_md(team_name)}`\n"
     message += f"📧 *Submitted By:* `{_escape_md(user_name)}`\n\n"
     message += f"🔗 *YouTube Link:* {youtube_url}\n"
     message += f"🔗 *Drive Link:* {drive_url}\n"
-    message += f"🎉 *Proposal submitted successfully!*"
+    message += "🎉 *Proposal submitted successfully!*"
     return message

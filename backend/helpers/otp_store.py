@@ -16,19 +16,6 @@ def store_otp(email: str, otp: str):
     _otp_store[email] = (otp, datetime.now(timezone.utc), 0)
 
 
-def verify_otp(email: str, otp: str) -> bool:
-    if email not in _otp_store:
-        return False
-    stored_otp, created_at, attempts = _otp_store[email]
-    if datetime.now(timezone.utc) > created_at + timedelta(minutes=OTP_EXPIRY_MINUTES):
-        del _otp_store[email]
-        return False
-    if stored_otp != otp:
-        return False
-    del _otp_store[email]
-    return True
-
-
 def check_otp(email: str, otp: str) -> str:
     if email not in _otp_store:
         return "expired"

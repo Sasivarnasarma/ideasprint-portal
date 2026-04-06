@@ -10,12 +10,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
 from database.connection import AsyncSessionLocal, get_db
-from helpers.email import send_submission_success_email
 from helpers.drive import upload_file_to_google_drive
+from helpers.email import send_submission_success_email
 from helpers.security import decode_verification_token
 from helpers.sheets import update_team_submission_links
 from helpers.storage import download_r2_to_tempfile, generate_presigned_url
-from helpers.telegram import format_submission_message, send_telegram_document, send_telegram_notification
+from helpers.telegram import (
+    format_submission_message,
+    send_telegram_document,
+    send_telegram_notification,
+)
 from models.team import Team
 from models.user import User
 from schemas.submission import PresignedUrlRequest, ProposalSubmission

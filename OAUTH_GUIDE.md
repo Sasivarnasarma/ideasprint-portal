@@ -12,7 +12,7 @@ First, we need a Google Cloud Project with the Drive and Sheets APIs enabled.
 
 1. Go to the **[Google Cloud Console](https://console.cloud.google.com/)** and sign in with your Google account.
 2. In the top navigation bar, click on the **Project Dropdown** (next to the Google Cloud logo) and click **New Project**.
-3. Give your project a name (e.g., `IdeaSprint-OAuth-Backend`) and click **Create**.
+3. Give your project a name (e.g., `ideasprint-OAuth-Backend`) and click **Create**.
 4. Once the project is created, make sure it is selected in the top navigation bar.
 5. In the left sidebar menu, navigate to **APIs & Services > Library**.
 6. Search for **Google Drive API** and click the **Enable** button.
@@ -29,7 +29,7 @@ Before Google lets you create credentials, you must tell it who is allowed to au
    - Select **External** (unless you are using a Google Workspace organization account, in which case you can select Internal).
    - Click **Create**.
 3. **App Information**:
-   - **App name:** Enter a recognizable name (e.g., `IdeaSprint Portal Backend`).
+   - **App name:** Enter a recognizable name (e.g., `ideasprint Portal Backend`).
    - **User support email:** Choose your email address from the dropdown.
    - **Developer contact info:** Enter your email address again at the very bottom.
    - Click **Save and Continue**.
@@ -38,12 +38,14 @@ Before Google lets you create credentials, you must tell it who is allowed to au
    - In the filter under *Manually add scopes*, paste `https://www.googleapis.com/auth/drive` and click **Add to Table**.
    - Paste `https://www.googleapis.com/auth/spreadsheets` and click **Add to Table**.
    - Click **Update**, then scroll down and click **Save and Continue**.
-5. **Test Users** (CRITICAL STEP):
-   - Because your app is in "Testing" mode (not published), **only specific test users can log in**.
-   - Click **Add Users**.
-   - Type in the **exact Google Email Address** you plan to use to authenticate (e.g., your personal Gmail).
-   - Click **Add**, then click **Save and Continue**.
+5. **Test Users**:
+   - You can add your email as a test user, though we will publish the app in the next step.
+   - Click **Save and Continue**.
 6. Review the summary and click **Back to Dashboard**.
+7. **Publish the App (CRITICAL FOR TOKEN LIFETIME)**:
+   - On the OAuth consent screen dashboard, under **Publishing status**, it will likely say "Testing".
+   - Click the **Publish App** button to change it to **"In production"**. Confirm any prompts. 
+   - *(⚠️ Note: If you leave the app in "Testing", Google permanently kills the generated refresh token every 7 days, which will silently break your backend's connection. Publishing it ensures the token never expires! You do NOT need to undergo Google's verification process for internal server use).*
 
 ---
 
@@ -78,7 +80,7 @@ You now have the credentials, but you need to authorize them with your account t
 4. A web browser window will automatically open asking you to **Choose an account**. Select the email address you added as a Test User in Phase 2.
 5. Google will show a warning saying **"Google hasn’t verified this app"**.
    - Click **Advanced**.
-   - Click **Go to IdeaSprint Portal Backend (unsafe)**.
+   - Click **Go to ideasprint Portal Backend (unsafe)**.
 6. Click **Continue** or **Allow** to grant the app access to your Google Drive and Google Sheets.
 7. Return to your terminal. If the authentication was successful, the script will output a large Base64 encoded string.
 

@@ -31,6 +31,21 @@ services:
     networks:
       - portal-network
 
+  frontend-admin:
+    build:
+      context: ./frontend-admin
+      dockerfile: Dockerfile
+    container_name: ideasprint-admin
+    ports:
+      - "5996:80"
+    env_file:
+      - ./frontend-admin/.env
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - portal-network
+
 networks:
   portal-network:
     driver: bridge

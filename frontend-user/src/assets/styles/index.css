@@ -6,11 +6,11 @@
 /* ── 1. CSS Variables (from style guide §3) ── */
 :root {
   /* Raw Palette */
-  --color-darkest: #04231E;
-  --color-dark: #1B5B4D;
-  --color-mid: #128C7D;
-  --color-accent: #03C7B3;
-  --color-text: #FBFFFE;
+  --color-darkest: #04231e;
+  --color-dark: #1b5b4d;
+  --color-mid: #128c7d;
+  --color-accent: #03c7b3;
+  --color-text: #fbfffe;
 
   /* Raw RGB channels (for rgba helpers) */
   --rgb-darkest: 4, 35, 30;
@@ -20,14 +20,14 @@
   --rgb-text: 251, 255, 254;
 
   /* Semantic Aliases */
-  --bg-primary: #04231E;
-  --bg-secondary: #04231E;
+  --bg-primary: #04231e;
+  --bg-secondary: #04231e;
   --ui-panel: rgba(4, 35, 30, 0.45);
   --glass-bg: rgba(27, 91, 77, 0.25);
   --glass-border: rgba(3, 199, 179, 0.25);
-  --accent: #03C7B3;
-  --text-primary: #FBFFFE;
-  --text-muted: #B8C2C0;
+  --accent: #03c7b3;
+  --text-primary: #fbfffe;
+  --text-muted: #b8c2c0;
   --text-secondary: rgba(251, 255, 254, 0.7);
 
   /* Glow utilities */
@@ -38,19 +38,19 @@
   /* Accent opacity helpers */
   --accent-05: rgba(3, 199, 179, 0.05);
   --accent-08: rgba(3, 199, 179, 0.08);
-  --accent-10: rgba(3, 199, 179, 0.10);
+  --accent-10: rgba(3, 199, 179, 0.1);
   --accent-15: rgba(3, 199, 179, 0.15);
-  --accent-20: rgba(3, 199, 179, 0.20);
+  --accent-20: rgba(3, 199, 179, 0.2);
   --accent-25: rgba(3, 199, 179, 0.25);
-  --accent-30: rgba(3, 199, 179, 0.30);
+  --accent-30: rgba(3, 199, 179, 0.3);
   --accent-35: rgba(3, 199, 179, 0.35);
-  --accent-50: rgba(3, 199, 179, 0.50);
-  --accent-60: rgba(3, 199, 179, 0.60);
+  --accent-50: rgba(3, 199, 179, 0.5);
+  --accent-60: rgba(3, 199, 179, 0.6);
 
   /* Dark opacity helpers */
-  --dark-40: rgba(4, 35, 30, 0.40);
-  --dark-60: rgba(4, 35, 30, 0.60);
-  --dark-80: rgba(4, 35, 30, 0.80);
+  --dark-40: rgba(4, 35, 30, 0.4);
+  --dark-60: rgba(4, 35, 30, 0.6);
+  --dark-80: rgba(4, 35, 30, 0.8);
   --dark-95: rgba(4, 35, 30, 0.95);
 
   /* Status (Overridden to strictly adhere to palette) */
@@ -73,7 +73,6 @@
   --transition-normal: 0.3s ease;
   --transition-slow: 0.5s ease;
 }
-
 
 /* ── 2. Reset & Base (style guide §4) ── */
 *,
@@ -132,7 +131,6 @@ h4 {
   background: var(--accent-60);
 }
 
-
 /* ── 3. Atmospheric Background (style guide §5) ── */
 #smooth-wave-bg {
   position: fixed;
@@ -174,7 +172,6 @@ h4 {
   z-index: 10;
 }
 
-
 /* ── 4. Auth Page Layout ── */
 .auth-page {
   min-height: 100vh;
@@ -194,7 +191,6 @@ h4 {
   overflow: hidden;
 }
 
-/* Floating circles removed to prevent off-center phantom glows */
 /* ── 5. Auth Container & Card (Glassmorphism §6) ── */
 .auth-container {
   width: 100%;
@@ -232,7 +228,6 @@ h4 {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-
 .auth-card::before {
   content: '';
   position: absolute;
@@ -247,7 +242,6 @@ h4 {
 .register-card {
   padding: 3.5rem 2.5rem 2rem 2.5rem;
 }
-
 
 /* ── 6. Logo ── */
 .logo {
@@ -299,7 +293,6 @@ h4 {
   transform: scale(1.05);
 }
 
-
 /* ── 7. Auth Header ── */
 .auth-header {
   text-align: center;
@@ -319,7 +312,6 @@ h4 {
   color: var(--text-muted);
   font-size: 0.95rem;
 }
-
 
 /* ── 8. Progress Indicator ── */
 .progress-indicator {
@@ -402,7 +394,6 @@ h4 {
   background: linear-gradient(90deg, var(--success), var(--accent));
 }
 
-
 /* ── 9. Stage Content ── */
 .stage-wrapper {
   position: relative;
@@ -456,7 +447,6 @@ h4 {
     transform: translateY(0);
   }
 }
-
 
 /* ── 10. Stage Header ── */
 .stage-header {
@@ -515,7 +505,6 @@ h4 {
   margin-top: 0.25rem;
 }
 
-
 /* ── 11. Form Styles (style guide §10) ── */
 .auth-form {
   display: flex;
@@ -558,9 +547,10 @@ h4 {
 
 .form-group input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 15px rgba(3, 199, 179, 0.3), 0 0 30px rgba(3, 199, 179, 0.1);
+  box-shadow:
+    0 0 15px rgba(3, 199, 179, 0.3),
+    0 0 30px rgba(3, 199, 179, 0.1);
 }
-
 
 /* ── 12. OTP Inputs ── */
 .otp-container {
@@ -587,14 +577,15 @@ h4 {
 
 .otp-input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 15px rgba(3, 199, 179, 0.3), 0 0 30px rgba(3, 199, 179, 0.1);
+  box-shadow:
+    0 0 15px rgba(3, 199, 179, 0.3),
+    0 0 30px rgba(3, 199, 179, 0.1);
   transform: scale(1.05);
 }
 
 .otp-input:not(:placeholder-shown) {
   border-color: var(--success);
 }
-
 
 /* ── 13. Resend Section ── */
 .resend-section {
@@ -624,7 +615,6 @@ h4 {
 .resend-btn:hover {
   color: var(--text-primary);
 }
-
 
 /* ── 14. Back / Edit Button ── */
 .back-btn {
@@ -660,7 +650,6 @@ h4 {
   flex-shrink: 0;
 }
 
-
 /* ── 15. Field Error ── */
 .field-error {
   color: var(--error);
@@ -690,7 +679,6 @@ h4 {
   display: flex;
   flex-direction: column;
 }
-
 
 /* ── 16. Password Toggle ── */
 .password-wrapper {
@@ -725,7 +713,6 @@ h4 {
   height: 18px;
 }
 
-
 /* ── 17. Primary Button (Modern Cinematic Glass) ── */
 .btn-primary {
   display: flex;
@@ -734,7 +721,6 @@ h4 {
   gap: 0.5rem;
   width: 100%;
   padding: 0.9rem 2.2rem;
-  /* Glassmorphic base */
   background: rgba(3, 199, 179, 0.15);
   backdrop-filter: blur(12px) saturate(120%);
   -webkit-backdrop-filter: blur(12px) saturate(120%);
@@ -758,10 +744,11 @@ h4 {
 .btn-primary:hover:not(:disabled) {
   background: rgba(3, 199, 179, 0.3);
   border-color: rgba(3, 199, 179, 0.8);
-  box-shadow: 0 0 25px rgba(3, 199, 179, 0.5), 0 8px 25px rgba(0, 0, 0, 0.4);
+  box-shadow:
+    0 0 25px rgba(3, 199, 179, 0.5),
+    0 8px 25px rgba(0, 0, 0, 0.4);
   transform: translateY(-2px);
 }
-
 
 .btn-primary:active:not(:disabled) {
   transform: translateY(0);
@@ -782,7 +769,6 @@ h4 {
   position: relative;
   z-index: 1;
 }
-
 
 /* ── 18. Secondary Button (Outline — style guide §7) ── */
 .btn-secondary {
@@ -823,7 +809,6 @@ h4 {
   cursor: not-allowed;
 }
 
-
 /* ── 18.5 Loading Spinner ── */
 .spinner {
   width: 18px;
@@ -838,10 +823,13 @@ h4 {
 }
 
 @keyframes rotation {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
-
 
 /* ── 19. Compact Input ── */
 .input-compact {
@@ -849,7 +837,6 @@ h4 {
   font-size: 0.9rem !important;
   border-radius: 4px !important;
 }
-
 
 /* ── 20. Spinner ── */
 .spinner {
@@ -867,7 +854,6 @@ h4 {
   }
 }
 
-
 /* ── 21. Error Message ── */
 .error-message {
   background: hsla(0, 85%, 60%, 0.12);
@@ -878,7 +864,6 @@ h4 {
   font-size: 0.875rem;
   text-align: center;
 }
-
 
 /* ── 22. Auth Footer ── */
 .auth-footer {
@@ -904,7 +889,6 @@ h4 {
   color: var(--text-primary);
   text-decoration: underline;
 }
-
 
 /* ── 23. Team Form Styles ── */
 .team-name-level-row {
@@ -993,7 +977,6 @@ h4 {
   overflow: hidden;
 }
 
-
 /* ── 24. Members Section ── */
 .members-section {
   margin-top: 0.5rem;
@@ -1076,7 +1059,6 @@ h4 {
   height: 16px;
 }
 
-
 /* ── 25. Member Card ── */
 .member-card {
   background: rgba(4, 35, 30, 0.6);
@@ -1147,7 +1129,7 @@ h4 {
 }
 
 .remove-member-btn:hover {
-  background: rgba(239, 68, 68, 0.1); /* Subtle red tint */
+  background: rgba(239, 68, 68, 0.1);
   border-color: #ef4444;
   color: #ef4444;
   box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
@@ -1181,7 +1163,6 @@ h4 {
   border-color: var(--accent);
   box-shadow: 0 0 15px rgba(3, 199, 179, 0.2);
 }
-
 
 /* ── 26. Dashboard / Success Placeholder ── */
 .dashboard-placeholder {
@@ -1239,12 +1220,10 @@ h4 {
   font-style: italic;
 }
 
-
 /* ── 27. Forgot Password Success ── */
 .forgot-success {
   text-align: center;
 }
-
 
 /* ── 28. Team Name Header ── */
 .team-name-header {
@@ -1258,12 +1237,10 @@ h4 {
   text-transform: uppercase;
 }
 
-
 /* ── 29. Register Header ── */
 .register-header {
   text-align: center;
 }
-
 
 /* ── 30. Desktop Landscape Layout ── */
 @media (min-width: 768px) {
@@ -1436,10 +1413,8 @@ h4 {
   }
 }
 
-
 /* ── 31. Keyframe Animations (style guide §12) ── */
 @keyframes badgePulse {
-
   0%,
   100% {
     opacity: 1;
@@ -1463,7 +1438,8 @@ h4 {
 }
 
 /* ── 32. Force Team Registration Input Colors ── */
-textarea, select {
+textarea,
+select {
   width: 100%;
   padding: 1rem 1.5rem;
   background: rgba(4, 35, 30, 0.8) !important;
@@ -1476,9 +1452,12 @@ textarea, select {
   outline: none;
 }
 
-textarea:focus, select:focus {
+textarea:focus,
+select:focus {
   border-color: var(--color-accent) !important;
-  box-shadow: 0 0 15px rgba(3, 199, 179, 0.3), 0 0 30px rgba(3, 199, 179, 0.1) !important;
+  box-shadow:
+    0 0 15px rgba(3, 199, 179, 0.3),
+    0 0 30px rgba(3, 199, 179, 0.1) !important;
 }
 
 option {

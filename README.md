@@ -1,6 +1,6 @@
-# IdeaSprint 2026 Portal
+# ideasprint 2026 Portal
 
-A sleek, robust, and modern portal for **IdeaSprint 2026**, handling complex team registration logic and large-file proposal submissions. It is designed around maximum performance, security, and fully automated administrative features.
+A sleek, robust, and modern portal for **ideasprint 2026**, handling complex team registration logic and large-file proposal submissions. It is designed around maximum performance, security, and fully automated administrative features.
 
 ---
 
@@ -41,7 +41,7 @@ The platform supports large video links and PDF presentations without overloadin
 ## 📁 Project Architecture
 
 ```text
-ideadsprint-portal/
+ideasprint-portal/
 ├── backend/
 │   ├── database/           # Async SQLAlchemy Engine & Sessions
 │   ├── helpers/
@@ -156,7 +156,8 @@ The entire stack (backend and frontend) is fully containerized and runs seamless
    docker-compose up --build -d
    ```
 3. **Access points:**
-   - **Frontend**: `http://localhost:5995`
+   - **Frontend User**: `http://localhost:5995`
+   - **Frontend Admin**: `http://localhost:5996`
    - **Backend API**: `http://localhost:5990`
 
 ---
