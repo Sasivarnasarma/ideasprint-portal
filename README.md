@@ -156,7 +156,8 @@ The entire stack (backend and frontend) is fully containerized and runs seamless
    docker-compose up --build -d
    ```
 3. **Access points:**
-   - **Frontend**: `http://localhost:5995`
+   - **Frontend User**: `http://localhost:5995`
+   - **Frontend Admin**: `http://localhost:5996`
    - **Backend API**: `http://localhost:5990`
 
 ---

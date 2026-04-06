@@ -8,8 +8,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
 
-from fastapi.concurrency import run_in_threadpool
 import resend
+from fastapi.concurrency import run_in_threadpool
 
 logger = logging.getLogger(__name__)
 

@@ -1,6 +1,7 @@
 from typing import List, Optional
 
 from pydantic import BaseModel, Field, model_validator
+
 from schemas.team import TeamMemberSchema
 
 

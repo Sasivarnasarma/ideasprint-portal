@@ -1,0 +1,355 @@
+/* ==========================================
+   ideasprint 2026 — Admin Theme
+   CSS-only retheme: no JSX changes required
+   ========================================== */
+
+/* ── 1. CSS Variables (from style guide) ── */
+:root {
+  /* Raw Palette */
+  --color-darkest: #04231E;
+  --color-dark: #1B5B4D;
+  --color-mid: #128C7D;
+  --color-accent: #03C7B3;
+  --color-text: #FBFFFE;
+
+  /* Semantic Aliases */
+  --bg-primary: #04231E;
+  --glass-bg: rgba(27, 91, 77, 0.25);
+  --glass-border: rgba(3, 199, 179, 0.25);
+  --accent: #03C7B3;
+  --text-primary: #FBFFFE;
+  --text-muted: #B8C2C0;
+
+  /* Typography */
+  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Montserrat', sans-serif;
+
+  /* Spacing */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+}
+
+
+/* ── 2. Reset & Base ── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: rgba(3, 199, 179, 0.35); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(3, 199, 179, 0.60); }
+
+/* ── 3. Atmospheric Background ── */
+#smooth-wave-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--color-darkest);
+  overflow: hidden;
+  pointer-events: none;
+}
+#smooth-wave-bg::before {
+  content: '';
+  position: absolute;
+  top: -20%; left: -10%;
+  width: 140%; height: 140%;
+  background: radial-gradient(ellipse at center, rgba(3, 199, 179, 0.15) 0%, transparent 60%);
+  filter: blur(80px); transform: rotate(-15deg); opacity: 0.8;
+}
+
+/* ── 4. Layout Helpers ── */
+.center-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.dashboard-wrapper {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ── 5. Generic Components ── */
+.auth-card {
+  background: var(--color-darkest);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(3, 199, 179, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: rgba(3, 199, 179, 0.15);
+  backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid rgba(3, 199, 179, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 30px;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: rgba(3, 199, 179, 0.3);
+  border-color: rgba(3, 199, 179, 0.8);
+  box-shadow: 0 0 15px rgba(3, 199, 179, 0.5);
+  transform: translateY(-2px);
+}
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.5rem;
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 30px;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(3, 199, 179, 0.1);
+}
+
+input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: rgba(4, 35, 30, 0.8);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(3, 199, 179, 0.2);
+}
+
+.error-message {
+  color: hsla(0, 85%, 60%, 1);
+  background: hsla(0, 85%, 60%, 0.1);
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid hsla(0, 85%, 60%, 0.3);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* ── 6. Animations & Skeleton Loading ── */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.skeleton {
+  background: var(--color-darkest);
+  background-image: linear-gradient(to right, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 20%, rgba(255,255,255,0.03) 40%, rgba(255,255,255,0.03) 100%);
+  background-repeat: no-repeat;
+  background-size: 2000px 100%;
+  animation: shimmer 2s infinite linear forwards;
+  border-radius: 4px;
+}
+
+.skeleton-text {
+  height: 20px;
+  width: 100%;
+}
+
+.skeleton-title {
+  height: 30px;
+  width: 50%;
+  margin-bottom: 1rem;
+}
+
+.skeleton-card {
+  height: 150px;
+  width: 100%;
+  border-radius: var(--radius-lg);
+}
+
+/* ── 7. Mobile Responsiveness ── */
+
+.mobile-header {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background-color: var(--color-darkest);
+  border-bottom: 1px solid var(--glass-border);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.hamburger-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-accent);
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-wrapper,
+  .admin-main-content {
+    padding: 1rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-header {
+    display: flex;
+  }
+
+  /* Responsive Table "Card" View */
+  .responsive-table table, 
+  .responsive-table thead, 
+  .responsive-table tbody, 
+  .responsive-table th, 
+  .responsive-table td, 
+  .responsive-table tr {
+    display: block;
+    width: 100%;
+  }
+
+  .responsive-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .responsive-table tr {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.5rem;
+    padding: 0.5rem;
+  }
+
+  .responsive-table td {
+    border: none !important;
+    position: relative;
+    padding-left: 45% !important;
+    text-align: right !important;
+    min-height: 48px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .responsive-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    width: 40%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .admin-layout {
+    flex-direction: column !important;
+  }
+
+  .admin-main-content {
+    margin-left: 0 !important;
+    padding: 1.5rem 1rem !important;
+    width: 100%;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 50;
+    width: 280px !important;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 45;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .sidebar-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .auth-card {
+    padding: 1.5rem;
+  }
+}

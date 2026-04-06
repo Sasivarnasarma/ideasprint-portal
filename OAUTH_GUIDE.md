@@ -38,12 +38,14 @@ Before Google lets you create credentials, you must tell it who is allowed to au
    - In the filter under *Manually add scopes*, paste `https://www.googleapis.com/auth/drive` and click **Add to Table**.
    - Paste `https://www.googleapis.com/auth/spreadsheets` and click **Add to Table**.
    - Click **Update**, then scroll down and click **Save and Continue**.
-5. **Test Users** (CRITICAL STEP):
-   - Because your app is in "Testing" mode (not published), **only specific test users can log in**.
-   - Click **Add Users**.
-   - Type in the **exact Google Email Address** you plan to use to authenticate (e.g., your personal Gmail).
-   - Click **Add**, then click **Save and Continue**.
+5. **Test Users**:
+   - You can add your email as a test user, though we will publish the app in the next step.
+   - Click **Save and Continue**.
 6. Review the summary and click **Back to Dashboard**.
+7. **Publish the App (CRITICAL FOR TOKEN LIFETIME)**:
+   - On the OAuth consent screen dashboard, under **Publishing status**, it will likely say "Testing".
+   - Click the **Publish App** button to change it to **"In production"**. Confirm any prompts. 
+   - *(⚠️ Note: If you leave the app in "Testing", Google permanently kills the generated refresh token every 7 days, which will silently break your backend's connection. Publishing it ensures the token never expires! You do NOT need to undergo Google's verification process for internal server use).*
 
 ---
 

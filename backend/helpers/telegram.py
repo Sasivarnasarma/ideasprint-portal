@@ -33,7 +33,7 @@ async def send_telegram_notification(text: str):
             logger.info("Successfully sent Telegram notification.")
             return True
     except httpx.HTTPError as e:
-        logger.error(f"Failed to send Telegram notification: {e}")
+        logger.error(f"Failed to send Telegram notification: {e} The response is {response.json()}")
         return False
 
 
@@ -58,7 +58,7 @@ async def send_telegram_document(file_path: str, caption: str):
                 logger.info("Successfully sent Telegram document.")
                 return True
     except Exception as e:
-        logger.error(f"Failed to upload Telegram document: {repr(e)}")
+        logger.error(f"Failed to upload Telegram document: {repr(e)} The response is {response.json()}")
         return False
 
 

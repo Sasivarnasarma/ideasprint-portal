@@ -25,7 +25,7 @@ def main():
     try:
         flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
         print("Opening browser to authorize...")
-        creds = flow.run_local_server(port=0)
+        creds = flow.run_local_server(port=0, access_type='offline', prompt='consent')
         print("\nAuthentication successful!")
 
         token_data = {

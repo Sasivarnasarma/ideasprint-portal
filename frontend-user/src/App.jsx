@@ -13,14 +13,14 @@ function App() {
     <AuthProvider>
       <SubmissionProvider>
         <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/register-success" element={<RegistrationSuccessful />} />
-          <Route path="/submission" element={<Submission />} />
-          <Route path="/submission-successful" element={<SubmissionSuccessful />} />
-        </Routes>
-      </BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/register-success" element={<RegistrationSuccessful />} />
+            <Route path="/submission" element={<Submission />} />
+            <Route path="/submission-successful" element={<SubmissionSuccessful />} />
+          </Routes>
+        </BrowserRouter>
       </SubmissionProvider>
     </AuthProvider>
   );

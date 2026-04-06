@@ -14,7 +14,7 @@ logging.basicConfig(
     level=logging.INFO,
 )
 logger = logging.getLogger(__name__)
-logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.WARNING)
+logging.getLogger("googleapiclient.discovery_cache").setLevel(logging.WARNING)
 logger.info(f"Environment loaded: {is_env_loaded}")
 
 from fastapi import FastAPI, Request
@@ -28,7 +28,7 @@ from slowapi.util import get_remote_address
 from database.connection import Base, engine
 from helpers.oauth import verify_oauth_token_on_startup
 from helpers.otp_store import cleanup_expired_otps
-from routes import otp, registration, submission
+from routes import admin_auth, admin_dashboard, otp, registration, submission
 
 
 @asynccontextmanager
@@ -62,11 +62,7 @@ async def rate_limit_handler(request, exc):
     )
 
 
-origins = [
-    "https://isportal.pages.dev",
-    "https://isportal.hackx.lk",
-    "http://localhost:5173",
-]
+origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -78,6 +74,8 @@ app.add_middleware(
 app.include_router(registration.router)
 app.include_router(submission.router)
 app.include_router(otp.router)
+app.include_router(admin_auth.router)
+app.include_router(admin_dashboard.router)
 
 
 @app.get("/")
