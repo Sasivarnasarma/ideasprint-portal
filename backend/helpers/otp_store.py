@@ -16,7 +16,6 @@ def store_otp(email: str, otp: str):
     _otp_store[email] = (otp, datetime.now(timezone.utc), 0)
 
 
-
 def check_otp(email: str, otp: str) -> str:
     if email not in _otp_store:
         return "expired"

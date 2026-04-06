@@ -9,11 +9,12 @@ from sqlalchemy.future import select
 
 from database.connection import get_db
 from helpers.email import generate_otp, send_otp_email
-from helpers.otp_store import (check_otp, clear_otp, get_last_otp_info,
-                               store_otp)
-from helpers.security import (create_captcha_session_token,
-                              create_verification_token,
-                              decode_captcha_session_token)
+from helpers.otp_store import check_otp, clear_otp, get_last_otp_info, store_otp
+from helpers.security import (
+    create_captcha_session_token,
+    create_verification_token,
+    decode_captcha_session_token,
+)
 from helpers.turnstile import verify_turnstile
 from models.team import Team
 from models.user import User

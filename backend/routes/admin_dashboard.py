@@ -87,7 +87,7 @@ async def get_all_teams(
 async def get_team_details(
     team_id: int,
     admin_data: dict = Depends(get_current_admin),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ):
     result = await db.execute(
         select(Team)

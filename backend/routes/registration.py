@@ -10,8 +10,7 @@ from database.connection import get_db
 from helpers.email import send_welcome_email
 from helpers.security import decode_verification_token
 from helpers.sheets import append_to_google_sheet, format_registration_row
-from helpers.telegram import (format_registration_message,
-                              send_telegram_notification)
+from helpers.telegram import format_registration_message, send_telegram_notification
 from models.team import Team, TeamMember
 from models.user import User
 from schemas.registration import UserFullRegistration
