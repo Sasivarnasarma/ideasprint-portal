@@ -19,7 +19,7 @@ export const submissionAPI = {
     const response = await api.post('/otp/send', {
       email,
       turnstile_token: turnstileToken,
-      purpose: 'submission'
+      purpose: 'submission',
     });
     return response.data;
   },
@@ -28,7 +28,7 @@ export const submissionAPI = {
     const response = await api.post('/otp/resend', {
       email,
       captcha_session_token: captchaSessionToken,
-      purpose: 'submission'
+      purpose: 'submission',
     });
     return response.data;
   },
@@ -38,7 +38,7 @@ export const submissionAPI = {
       email,
       otp,
       captcha_session_token: captchaSessionToken,
-      purpose: 'submission'
+      purpose: 'submission',
     });
     return response.data;
   },
@@ -47,7 +47,7 @@ export const submissionAPI = {
     const response = await api.post('/submission/presigned-url', {
       verification_token: verificationToken,
       team_no: teamNo,
-      team_name: teamName
+      team_name: teamName,
     });
     return response.data;
   },

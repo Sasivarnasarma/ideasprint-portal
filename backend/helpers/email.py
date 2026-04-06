@@ -50,7 +50,7 @@ def _send_email_sync(to_email: str, subject: str, body: str):
                 "subject": subject,
                 "html": body,
             }
-            email_response = resend.Emails.send(params)
+            resend.Emails.send(params)
             logger.info(f"Email sent successfully via Resend to {to_email}")
             return True
         except Exception as e:
@@ -70,7 +70,7 @@ def _send_email_sync(to_email: str, subject: str, body: str):
         server.starttls()
         server.login(SMTP_USER, SMTP_PASSWORD)
         text = msg.as_string()
-        server.sendmail(FROM_EMAIL, to_email, text)
+        server.sendmail(SMTP_FROM_EMAIL, to_email, text)
         server.quit()
         return True
     except Exception as e:
@@ -120,7 +120,7 @@ async def send_welcome_email(
             m_im = html.escape(m.im_number)
             m_phone = html.escape(m.phone)
             members_html += f"""
-                            <!-- Member {i+1} Card -->
+                            <!-- Member {i + 1} Card -->
                             <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: rgba(3, 199, 179, 0.06); border: 1px solid rgba(3, 199, 179, 0.2); border-radius: 12px; margin-bottom: 12px; overflow: hidden;">
                                 <tr>
                                     <td style="padding: 16px 20px;">
@@ -128,7 +128,7 @@ async def send_welcome_email(
                                         <table role="presentation" cellspacing="0" cellpadding="0" style="margin-bottom: 10px;">
                                             <tr>
                                                 <td style="background: rgba(3, 199, 179, 0.18); border-radius: 50px; padding: 3px 12px;">
-                                                    <span style="font-size: 11px; color: #03C7B3; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Member {i+1}</span>
+                                                    <span style="font-size: 11px; color: #03C7B3; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Member {i + 1}</span>
                                                 </td>
                                             </tr>
                                         </table>

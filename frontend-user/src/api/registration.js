@@ -22,7 +22,7 @@ export const registrationAPI = {
     const response = await api.post('/otp/send', {
       email,
       turnstile_token: turnstileToken,
-      purpose: 'registration'
+      purpose: 'registration',
     });
     return response.data;
   },
@@ -31,7 +31,7 @@ export const registrationAPI = {
     const response = await api.post('/otp/resend', {
       email,
       captcha_session_token: captchaSessionToken,
-      purpose: 'registration'
+      purpose: 'registration',
     });
     return response.data;
   },
@@ -41,7 +41,7 @@ export const registrationAPI = {
       email,
       otp,
       captcha_session_token: captchaSessionToken,
-      purpose: 'registration'
+      purpose: 'registration',
     });
     return response.data;
   },

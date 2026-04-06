@@ -17,18 +17,24 @@ logger = logging.getLogger(__name__)
 logging.getLogger("googleapiclient.discovery_cache").setLevel(logging.WARNING)
 logger.info(f"Environment loaded: {is_env_loaded}")
 
-from fastapi import FastAPI, Request
-from fastapi.concurrency import run_in_threadpool
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
-from slowapi import Limiter
-from slowapi.errors import RateLimitExceeded
-from slowapi.util import get_remote_address
+from fastapi import FastAPI, Request  # noqa: E402
+from fastapi.concurrency import run_in_threadpool  # noqa: E402
+from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
+from fastapi.responses import JSONResponse  # noqa: E402
+from slowapi import Limiter  # noqa: E402
+from slowapi.errors import RateLimitExceeded  # noqa: E402
+from slowapi.util import get_remote_address  # noqa: E402
 
-from database.connection import Base, engine
-from helpers.oauth import verify_oauth_token_on_startup
-from helpers.otp_store import cleanup_expired_otps
-from routes import admin_auth, admin_dashboard, otp, registration, submission
+from database.connection import Base, engine  # noqa: E402
+from helpers.oauth import verify_oauth_token_on_startup  # noqa: E402
+from helpers.otp_store import cleanup_expired_otps  # noqa: E402
+from routes import (  # noqa: E402
+    admin_auth,
+    admin_dashboard,
+    otp,
+    registration,
+    submission,
+)
 
 
 @asynccontextmanager

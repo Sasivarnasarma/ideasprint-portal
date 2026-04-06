@@ -42,15 +42,15 @@ async def get_dashboard_metrics(
 
     total_proposals_query = await db.execute(
         select(func.count(Team.id))
-        .where(Team.youtube_link != None)
+        .where(Team.youtube_link.isnot(None))
         .where(Team.youtube_link != "")
-        .where(Team.pdf_link != None)
+        .where(Team.pdf_link.isnot(None))
         .where(Team.pdf_link != "")
     )
     total_prop_count = total_proposals_query.scalar() or 0
 
     total_admins_query = await db.execute(
-        select(func.count(Admin.id)).where(Admin.is_approved == True)
+        select(func.count(Admin.id)).where(Admin.is_approved.is_(True))
     )
     total_admin_count = total_admins_query.scalar() or 0
 

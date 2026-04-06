@@ -35,11 +35,11 @@ export const adminAuthAPI = {
     });
     return response.data;
   },
-  
+
   getMe: async () => {
     const response = await api.get('/admin/auth/me');
     return response.data;
-  }
+  },
 };
 
 export const adminDashboardAPI = {
@@ -66,7 +66,7 @@ export const adminDashboardAPI = {
   deleteAdmin: async (adminId) => {
     const response = await api.delete(`/admin/admins/${adminId}`);
     return response.data;
-  }
-}
+  },
+};
 
 export default api;

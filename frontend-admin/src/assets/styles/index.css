@@ -6,19 +6,19 @@
 /* ── 1. CSS Variables (from style guide) ── */
 :root {
   /* Raw Palette */
-  --color-darkest: #04231E;
-  --color-dark: #1B5B4D;
-  --color-mid: #128C7D;
-  --color-accent: #03C7B3;
-  --color-text: #FBFFFE;
+  --color-darkest: #04231e;
+  --color-dark: #1b5b4d;
+  --color-mid: #128c7d;
+  --color-accent: #03c7b3;
+  --color-text: #fbfffe;
 
   /* Semantic Aliases */
-  --bg-primary: #04231E;
+  --bg-primary: #04231e;
   --glass-bg: rgba(27, 91, 77, 0.25);
   --glass-border: rgba(3, 199, 179, 0.25);
-  --accent: #03C7B3;
-  --text-primary: #FBFFFE;
-  --text-muted: #B8C2C0;
+  --accent: #03c7b3;
+  --text-primary: #fbfffe;
+  --text-muted: #b8c2c0;
 
   /* Typography */
   --font-body: 'Inter', sans-serif;
@@ -33,7 +33,6 @@
   --transition-fast: 0.15s ease;
   --transition-normal: 0.3s ease;
 }
-
 
 /* ── 2. Reset & Base ── */
 *,
@@ -59,17 +58,29 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-heading);
   text-transform: uppercase;
   letter-spacing: 2px;
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-primary); }
-::-webkit-scrollbar-thumb { background: rgba(3, 199, 179, 0.35); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(3, 199, 179, 0.60); }
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(3, 199, 179, 0.35);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(3, 199, 179, 0.6);
+}
 
 /* ── 3. Atmospheric Background ── */
 #smooth-wave-bg {
@@ -83,10 +94,14 @@ h1, h2, h3, h4 {
 #smooth-wave-bg::before {
   content: '';
   position: absolute;
-  top: -20%; left: -10%;
-  width: 140%; height: 140%;
+  top: -20%;
+  left: -10%;
+  width: 140%;
+  height: 140%;
   background: radial-gradient(ellipse at center, rgba(3, 199, 179, 0.15) 0%, transparent 60%);
-  filter: blur(80px); transform: rotate(-15deg); opacity: 0.8;
+  filter: blur(80px);
+  transform: rotate(-15deg);
+  opacity: 0.8;
 }
 
 /* ── 4. Layout Helpers ── */
@@ -143,7 +158,10 @@ h1, h2, h3, h4 {
   box-shadow: 0 0 15px rgba(3, 199, 179, 0.5);
   transform: translateY(-2px);
 }
-.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
 .btn-secondary {
   display: inline-flex;
@@ -195,13 +213,23 @@ input:focus {
 
 /* ── 6. Animations & Skeleton Loading ── */
 @keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
 }
 
 .skeleton {
   background: var(--color-darkest);
-  background-image: linear-gradient(to right, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 20%, rgba(255,255,255,0.03) 40%, rgba(255,255,255,0.03) 100%);
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.08) 20%,
+    rgba(255, 255, 255, 0.03) 40%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
   background-repeat: no-repeat;
   background-size: 2000px 100%;
   animation: shimmer 2s infinite linear forwards;
@@ -260,11 +288,11 @@ input:focus {
   }
 
   /* Responsive Table "Card" View */
-  .responsive-table table, 
-  .responsive-table thead, 
-  .responsive-table tbody, 
-  .responsive-table th, 
-  .responsive-table td, 
+  .responsive-table table,
+  .responsive-table thead,
+  .responsive-table tbody,
+  .responsive-table th,
+  .responsive-table td,
   .responsive-table tr {
     display: block;
     width: 100%;
@@ -277,8 +305,8 @@ input:focus {
   }
 
   .responsive-table tr {
-    background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-sm);
     margin-bottom: 1.5rem;
     padding: 0.5rem;
