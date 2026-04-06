@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import logo from '../assets/images/ideasprint-logo.webp';
 
@@ -57,7 +57,7 @@ const SubmissionSuccessful = () => {
                     </div>
                 </div>
 
-                {/* Match auth-decoration identically to Register.jsx */}
+
                 <div className="auth-decoration">
                     <div className="decoration-circle circle-1"></div>
                     <div className="decoration-circle circle-2"></div>

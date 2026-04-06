@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { adminDashboardAPI } from '../api/admin';
-import { useAdminAuth } from '../context/AdminAuthContext';
+
 
 const Dashboard = () => {
-    const { adminUser, logout } = useAdminAuth();
+
     const navigate = useNavigate();
     const [metrics, setMetrics] = useState({ total_registrations: 0, total_proposals: 0, total_admins: 0 });
     const [isLoading, setIsLoading] = useState(true);

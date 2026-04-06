@@ -16,7 +16,7 @@ const SubmissionStage1 = ({ onNext }) => {
     const turnstileRef = useRef(null);
     const widgetIdRef = useRef(null);
 
-    // Turnstile initialization
+
     useEffect(() => {
         const renderWidget = () => {
             if (window.turnstile && turnstileRef.current && widgetIdRef.current === null) {
@@ -87,7 +87,7 @@ const SubmissionStage1 = ({ onNext }) => {
             updateSubmissionData({
                 pendingEmail: email,
                 captchaSessionToken: response.captcha_session_token,
-                verificationToken: '' // reset on new email
+                verificationToken: ''
             });
             onNext();
         } catch (err) {

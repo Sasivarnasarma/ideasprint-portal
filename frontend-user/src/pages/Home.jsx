@@ -43,7 +43,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                {/* Background decorative elements matching the theme */}
+
                 <div className="auth-decoration">
                     <div className="decoration-circle circle-1"></div>
                     <div className="decoration-circle circle-2"></div>
@@ -51,7 +51,7 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* Floating Home Button Back to Main Website */}
+
             <a
                 href="https://ideasprint.hackx.lk/"
                 className="floating-home-btn"

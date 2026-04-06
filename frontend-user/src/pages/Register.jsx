@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import RegisterStage1 from '../components/RegisterStage1';
 import RegisterStage2 from '../components/RegisterStage2';
@@ -63,7 +63,7 @@ const Register = () => {
                             <img src={logo} alt="ideasprint" className="logo-img" />
                         </div>
 
-                        {/* Progress Indicator */}
+
                         <div className="progress-indicator">
                             <div className={`progress-step ${currentStage >= 1 ? 'active' : ''} ${currentStage > 1 ? 'completed' : ''}`}>
                                 <div className="step-number">
@@ -94,7 +94,7 @@ const Register = () => {
                         </div>
                     </div>
 
-                    {/* Stage Content with Animation */}
+
                     <div className={`stage-wrapper ${direction}`}>
                         <div className={`stage-slide stage-${currentStage}`}>
                             {renderStage()}
@@ -109,7 +109,7 @@ const Register = () => {
                 </div>
             </div>
 
-            {/* Floating Home Button */}
+
             <a
                 href="https://ideasprint.hackx.lk/"
                 className="floating-home-btn"

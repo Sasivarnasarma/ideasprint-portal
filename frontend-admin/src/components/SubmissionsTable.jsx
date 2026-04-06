@@ -15,7 +15,6 @@ const SubmissionsTable = () => {
         const fetchSubmissions = async () => {
             try {
                 const data = await adminDashboardAPI.getTeams();
-                // Filter only teams that have submitted both links
                 const submittedTeams = data.filter(team => team.youtube_link && team.pdf_link);
                 setSubmissions(submittedTeams);
             } catch (err) {

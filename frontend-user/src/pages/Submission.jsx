@@ -57,7 +57,7 @@ const Submission = () => {
                             <img src={logo} alt="ideasprint" className="logo-img" />
                         </div>
 
-                        {/* Progress Indicator */}
+
                         <div className="progress-indicator">
                             <div className={`progress-step ${currentStage >= 1 ? 'active' : ''} ${currentStage > 1 ? 'completed' : ''}`}>
                                 <div className="step-number">
@@ -88,7 +88,7 @@ const Submission = () => {
                         </div>
                     </div>
 
-                    {/* Stage Content with Animation */}
+
                     <div className={`stage-wrapper ${direction}`}>
                         <div className={`stage-slide stage-${currentStage}`}>
                             {renderStage()}
@@ -103,7 +103,7 @@ const Submission = () => {
                 </div>
             </div>
 
-            {/* Floating Home Button */}
+
             <a
                 href="https://ideasprint.hackx.lk/"
                 className="floating-home-btn"

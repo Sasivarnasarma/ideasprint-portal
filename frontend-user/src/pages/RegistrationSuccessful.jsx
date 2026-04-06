@@ -1,17 +1,10 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import logo from '../assets/images/ideasprint-logo.webp';
 
 const RegistrationSuccessful = () => {
-    const navigate = useNavigate();
-
     useEffect(() => {
         localStorage.clear();
     }, []);
-
-    const handleAction = () => {
-        navigate('/register');
-    };
 
     return (
         <div className="auth-page register-page">
@@ -61,7 +54,7 @@ const RegistrationSuccessful = () => {
                     </div>
                 </div>
 
-                {/* Match auth-decoration identically to Register.jsx */}
+
                 <div className="auth-decoration">
                     <div className="decoration-circle circle-1"></div>
                     <div className="decoration-circle circle-2"></div>

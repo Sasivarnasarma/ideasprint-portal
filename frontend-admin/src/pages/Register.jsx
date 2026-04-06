@@ -70,7 +70,7 @@ const Register = () => {
         try {
             const response = await adminAuthAPI.register(formData.username, formData.password, turnstileToken);
             setSuccessMessage(response.message || 'Registration successful. Please wait for approval.');
-            // Reset form
+
             setFormData({ username: '', password: '', confirmPassword: '' });
             if (window.turnstile && widgetIdRef.current !== null) {
                 window.turnstile.reset(widgetIdRef.current);

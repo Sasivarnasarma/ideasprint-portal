@@ -7,7 +7,7 @@ const AdminLayout = () => {
 
     return (
         <div className="admin-layout" style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'transparent', position: 'relative' }}>
-            {/* Mobile Header */}
+
             <div className="mobile-header">
                 <h1 style={{ fontSize: '1.2rem', margin: 0, color: 'white', letterSpacing: '1px' }}>
                     <span style={{ color: 'var(--color-accent)' }}>ADMIN</span> PORTAL
@@ -21,7 +21,7 @@ const AdminLayout = () => {
                 </button>
             </div>
 
-            {/* Sidebar Backdrop */}
+
             <div 
                 className={`sidebar-backdrop ${isSidebarOpen ? 'open' : ''}`} 
                 onClick={() => setIsSidebarOpen(false)}

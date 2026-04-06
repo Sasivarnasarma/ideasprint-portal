@@ -28,7 +28,7 @@ const AdminsTable = () => {
     const handleApprove = async (adminId) => {
         try {
             await adminDashboardAPI.approveAdmin(adminId);
-            fetchAdmins(); // Refresh
+            fetchAdmins();
         } catch (err) {
             alert(err.response?.data?.detail || 'Failed to approve admin');
         }
@@ -38,7 +38,7 @@ const AdminsTable = () => {
         if (!window.confirm('Are you sure you want to delete this admin?')) return;
         try {
             await adminDashboardAPI.deleteAdmin(adminId);
-            fetchAdmins(); // Refresh
+            fetchAdmins();
         } catch (err) {
             alert(err.response?.data?.detail || 'Failed to delete admin');
         }

@@ -148,8 +148,6 @@ const RegisterStage3 = ({ onBack }) => {
             return;
         }
 
-
-
         const validMembers = members.filter(m => m.name.trim() && m.phone.trim() && m.im_number.trim());
         if (validMembers.length < 2) {
             setError('Please complete Name, Phone, and IM Number for at least two team members (Team must be 3-5 people)');
@@ -256,8 +254,6 @@ const RegisterStage3 = ({ onBack }) => {
                             <h3 style={{ margin: 0 }}>Level</h3>
                         </div>
                         <div className="form-group" style={{ marginBottom: '0', position: 'relative' }}>
-
-                            {/* Custom Dropdown UI */}
                             <div
                                 className={`custom-select ${isLevelDropdownOpen ? 'open' : ''}`}
                                 onClick={() => setIsLevelDropdownOpen(!isLevelDropdownOpen)}
@@ -304,7 +300,7 @@ const RegisterStage3 = ({ onBack }) => {
                                         right: 0,
                                         zIndex: 50,
                                         marginTop: '0.5rem',
-                                        backgroundColor: '#04231E', // solid dark bg to prevent transparency overlay issues
+                                        backgroundColor: '#04231E',
                                         border: '1px solid var(--color-accent)',
                                         borderRadius: '0.5rem',
                                         padding: '0.5rem',

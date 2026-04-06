@@ -21,7 +21,6 @@ const SubmissionStage3 = ({ onBack }) => {
         if (name === 'proposalPdf') {
             if (!value) return 'Proposal PDF is required';
             if (value.type !== 'application/pdf') return 'Only PDF files are allowed';
-            // Limit size to 10MB
             if (value.size > 10 * 1024 * 1024) return 'File size must be less than 10MB';
             return '';
         }
@@ -108,20 +107,17 @@ const SubmissionStage3 = ({ onBack }) => {
             const newFilename = `${submissionData.teamNo}_${sanitizedTeamName}.pdf`;
             const renamedFile = new File([formData.proposalPdf], newFilename, { type: formData.proposalPdf.type });
 
-            // 1. Get Presigned URL
             const urlData = await submissionAPI.getPresignedUrl(
                 submissionData.verificationToken,
                 submissionData.teamNo,
                 submissionData.teamName
             );
 
-            // 2. Upload to Cloudflare R2
             await submissionAPI.directUploadToR2(urlData.upload_url, renamedFile, (progressEvent) => {
                 const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
                 setUploadProgress(percentCompleted);
             });
 
-            // 3. Finalize metadata
             const submitData = {
                 verification_token: submissionData.verificationToken,
                 youtube_url: formData.youtubeUrl,

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { registrationAPI } from '../api/registration';
 import { useAuth } from '../context/AuthContext';
 
@@ -13,7 +13,7 @@ const RegisterStage1 = ({ onNext, onSkipToStage3 }) => {
     const [fieldErrors, setFieldErrors] = useState({});
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
+
     const [turnstileToken, setTurnstileToken] = useState(null);
     const turnstileRef = useRef(null);
     const widgetIdRef = useRef(null);
@@ -149,8 +149,6 @@ const RegisterStage1 = ({ onNext, onSkipToStage3 }) => {
             setError('Please fix the errors above');
             return;
         }
-
-
 
         setIsLoading(true);
 

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { adminAuthAPI } from '../api/admin';
 import { useAdminAuth } from '../context/AdminAuthContext';
-// import logo from '../assets/images/ideasprint-logo.webp'; // Will copy logo if needed or use text
+
 
 const Login = () => {
     const { login } = useAdminAuth();
